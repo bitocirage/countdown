@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Language" content="fr" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <style>
+        body {
+            text-align: center;
+            background: #00ECB9;
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+        
+        h1 {
+            color: #396;
+            font-weight: 100;
+            font-size: 40px;
+            margin: 40px 0px 20px;
+        }
+        
+        #clockdiv {
+            font-family: sans-serif;
+            color: #fff;
+            display: inline-block;
+            font-weight: 100;
+            text-align: center;
+            font-size: 30px;
+            margin-top: 100px;
+        }
+        
+        #clockdiv>div {
+            padding: 10px;
+            border-radius: 3px;
+            background: #00BF96;
+            display: inline-block;
+        }
+        
+        #clockdiv div>span {
+            padding: 15px;
+            border-radius: 3px;
+            background: #00816A;
+            display: inline-block;
+            width: 90px;
+        }
+        
+        .smalltext {
+            padding-top: 5px;
+            font-size: 16px;
+        }
+        
+        body.end {
+            background: #000;
+        }
+    </style>
+
+    <script language="JavaScript">
+        countdownManager = {
+            targetTime: new Date('2018-06-08 16:30:00'),
+            displayElement: {
+                day: null,
+                hour: null,
+                min: null,
+                sec: null
+            },
+
+            init: function() {
+                this.displayElement.day = jQuery('#countdown_day');
+                this.displayElement.hour = jQuery('#countdown_hour');
+                this.displayElement.min = jQuery('#countdown_min');
+                this.displayElement.sec = jQuery('#countdown_sec');
+
+                this.tick();
+                window.setInterval("countdownManager.tick();", 1000);
+            },
+
+            tick: function() {
+                var timeNow = new Date();
+
+                if (timeNow > this.targetTime) {
+                    jQuery('body').addClass('end');
+                    jQuery('#clockdiv').remove();
+
+                    return;
+                    //timeNow = this.targetTime;
+                }
+
+                var diff = this.dateDiff(timeNow, this.targetTime);
+
+                this.displayElement.day.text(diff.day);
+                this.displayElement.hour.text(diff.hour);
+                this.displayElement.min.text(diff.min);
+                this.displayElement.sec.text(diff.sec);
+            },
+
+            dateDiff: function(date1, date2) {
+                var diff = {};
+                var tmp = date2 - date1;
+
+                tmp = Math.floor(tmp / 1000);
+                diff.sec = tmp % 60;
+                tmp = Math.floor((tmp - diff.sec) / 60);
+                diff.min = tmp % 60;
+                tmp = Math.floor((tmp - diff.min) / 60);
+                diff.hour = tmp % 24;
+                tmp = Math.floor((tmp - diff.hour) / 24);
+                diff.day = tmp;
+
+                return diff;
+            }
+        };
+
+        jQuery(function($) {
+            countdownManager.init();
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <div id="clockdiv">
+        <div>
+            <span id="countdown_day"></span>
+            <div class="smalltext">Days</div>
+        </div>
+        <div>
+            <span id="countdown_hour"></span>
+            <div class="smalltext">Hours</div>
+        </div>
+        <div>
+            <span id="countdown_min"></span>
+            <div class="smalltext">Minutes</div>
+        </div>
+        <div>
+            <span id="countdown_sec"></span>
+            <div class="smalltext">Seconds</div>
+        </div>
+    </div>
+</body>
+
+</html>
