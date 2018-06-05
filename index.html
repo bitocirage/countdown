@@ -47,7 +47,7 @@
             border-radius: 3px;
             background: #00816A;
             display: inline-block;
-            width: 90px;
+            width: 60px;
         }
         
         .smalltext {
@@ -55,8 +55,12 @@
             font-size: 16px;
         }
         
-        body.end {
-            background: #000;
+        body #end {
+            display: none;
+        }
+        
+        body.end #end {
+            display: block;
         }
     </style>
 
@@ -85,10 +89,9 @@
 
                 if (timeNow > this.targetTime) {
                     jQuery('body').addClass('end');
-                    jQuery('#clockdiv').remove();
+                    timeNow = this.targetTime;
 
                     return;
-                    //timeNow = this.targetTime;
                 }
 
                 var diff = this.dateDiff(timeNow, this.targetTime);
@@ -126,6 +129,11 @@
 <body>
 
     <h1>rshudwlrq edfngudiw</h1>
+
+    <div id="end">
+        <iframe src="https://giphy.com/embed/xUA7aT1vNqVWHPY1cA" width="480" height="361" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+    </div>
+
     <div id="clockdiv">
         <div>
             <span id="countdown_day"></span>
